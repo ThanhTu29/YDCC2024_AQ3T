@@ -25,14 +25,12 @@ def add_question(request):
             question = question_form.save()
             choice_formset.instance = question
             choice_formset.save()
-            return redirect('question_list')  # Redirect to another page after adding question and choices
+            return redirect('question_list')  # Điều hướng tới trang khác sau khi thêm câu hỏi và câu trả lời
     else:
         question_form = QuestionForm()
         choice_formset = ChoiceFormSet()
-    
-    topics = Topic.objects.all()  # Retrieve all topics
-    
-    return render(request, 'add_question.html', {'question_form': question_form, 'choice_formset': choice_formset, 'topics': topics})
+        topic = Topic.objects.all()
+    return render(request, 'add_question.html', {'question_form': question_form, 'choice_formset': choice_formset, 'topics': topic})
 
 def import_question_from_csv(request):
     if request.method == 'POST' and 'question_file' in request.FILES:
